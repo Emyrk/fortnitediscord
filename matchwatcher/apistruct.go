@@ -28,6 +28,18 @@ func NewMatch() *Match {
 	return m
 }
 
+func (m *Match) MatchTypeString() string {
+	switch m.GameType {
+	case Solo_GameType:
+		return "solo"
+	case Duo_GameType:
+		return "duo"
+	case Squad_GameType:
+		return "squad"
+	}
+	return "Unknown"
+}
+
 func (m *Match) AddPlayer(name string, kills int) {
 	m.Players = append(m.Players, NewPlayerMatch(name, kills))
 }

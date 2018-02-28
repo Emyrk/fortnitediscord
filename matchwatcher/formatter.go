@@ -16,17 +16,31 @@ import "fmt"
 //}
 
 func FormatMatch(match *Match) string {
-	player := match.Players[0]
-	win := "lost"
+	// Format Match Header
+	str := fmt.Sprintf("Looks like someone just played a %s game!\n", match.MatchTypeString())
 	if match.Win {
-		win = "win"
+		str += " The match was a victory!\n"
+	} else {
+		str += " The match was a defeat :cry:\n"
 	}
 
-	str := "```\n"
-	str += fmt.Sprintf("%s Just %s a game\n", player.Name, win)
-	str += line("Kills", fmt.Sprintf("%d", player.Kills)) + "\n"
+	totalKills := 0
+	playerstr := "Player Stats:\n```\n"
+	for _, p := range match.Players {
+		playerstr += fmt.Sprintf("Player %s", p.Name) + "\n"
+		playerstr += " " + line("Kills:", fmt.Sprintf("%d", p.Kills)) + "\n"
+		totalKills += p.Kills
+	}
+	playerstr += "```\n"
 
-	str += "```"
+	str += "Game Stats \n```\n"
+	str += line("Place:", fmt.Sprintf("%d", match.TopN))
+	if match.MatchTypeString() != "solo" {
+		str += line("TotalKills:", fmt.Sprintf("%d", totalKills)) + "\n"
+	}
+
+	str += "```\n"
+	str += playerstr
 	return str
 }
 

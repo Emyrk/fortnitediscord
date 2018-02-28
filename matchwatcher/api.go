@@ -26,12 +26,12 @@ func GetStatisics(name string) (*PlayerStats, error) {
 }
 
 func GetStatisticsJson(name string) ([]byte, error) {
-	fmt.Println(nodepath)
-	data := exec.Command("node", nodepath, name)
-	var _ = data
+	data := exec.Command("node", nodepath, fmt.Sprintf(`"%s"`, name))
+	// fmt.Println("node", nodepath, fmt.Sprintf(`"%s"`, name))
 
 	d, err := data.Output()
 	if err != nil {
+		fmt.Println("Error output:", string(d))
 		return []byte{}, err
 	}
 

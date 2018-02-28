@@ -14,7 +14,8 @@ let fortniteAPI = new Fortnite([user, pass, launcherkey, clientkey]);
 
 fortniteAPI.login()
     .then(() => {
-        fortniteAPI.getStatsBR(args[2], "pc")
+        name = args[2].replace(/['"]+/g, '')
+        fortniteAPI.getStatsBR(name, "pc")
         // fortniteAPI.checkPlayer("Emyrks", "pc")
             .then((stats) => {
                 console.log(JSON.stringify(stats));

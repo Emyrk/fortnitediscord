@@ -3,6 +3,7 @@ package matchwatcher
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -21,15 +22,20 @@ func NewMatchWatcher(players []string) *MatcheWatcher {
 	return w
 }
 
+var last = time.Now().Add(-130 * time.Second)
+
 func (m *MatcheWatcher) Run() {
 	index := 0
 	ticker := time.NewTicker(time.Second * 10)
+	matchesFound := 0
+	count := 0
 	for _ = range ticker.C {
 		name := m.Players[index]
 		match := m.DetectGame(name)
 		if match != nil {
 			matches := m.QuickPlayerCycle(index)
 			combinedmatches := m.CombineMatches(append(matches, match...))
+			matchesFound += len(combinedmatches)
 			for _, mat := range combinedmatches {
 				m.MatchChannel <- mat
 			}
@@ -37,6 +43,12 @@ func (m *MatcheWatcher) Run() {
 		}
 		index++
 		index = index % len(m.Players)
+
+		count++
+		if time.Since(last).Seconds() > 120 {
+			log.Printf("Matches Found: %d, Total Iterations: %d. Currently on %s", matchesFound, count, name)
+			last = time.Now()
+		}
 	}
 }
 

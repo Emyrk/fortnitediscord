@@ -34,6 +34,7 @@ func NewBot(token string, namelist []string) *Bot {
 
 func (b *Bot) Run() {
 	go b.MatchWatcher.Run()
+	b.Send(TestChannel, "I'm back Online, Heyo!")
 
 	for {
 		select {
@@ -44,6 +45,7 @@ func (b *Bot) Run() {
 }
 
 func (b *Bot) Close() {
+	b.Send(TestChannel, "Going Offline, Goodbye!")
 	b.Connection.Close()
 }
 
