@@ -11,7 +11,7 @@ pass = process.env.EPIC_PASSWORD
 
 console.log(args[1])
 
-let fortniteAPI = new Fortnite(EPIC_USERNAME, EPIC_PASSWORD, n1, h1]);
+let fortniteAPI = new Fortnite([user, pass, launcherkey, clientkey]);
 
 fortniteAPI.login()
     .then(() => {
