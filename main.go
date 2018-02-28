@@ -10,7 +10,7 @@ import (
 
 func main() {
 	token := os.Getenv("DISCORD_TOKEN")
-	bot := gobot.NewBot(token, []string{"Emyrks", "LopDropFlop", "GuyWhoDoesThings", "r0bd0g364", "ScaRe TacticS23"})
+	bot := gobot.NewBot(token, []string{"Emyrks", "LopDropFlop", "GuyWhoDoesThings", "r0bd0g364", "ScaRe TacticS23", "Bad Assassins_YT"})
 	bot.Connect()
 
 	c := make(chan os.Signal, 2)
