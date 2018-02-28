@@ -23,7 +23,8 @@ fortniteAPI.login()
             })
             .catch((err) => {
 
-                console.log(err);
+                console.log(args[1], err);
+                process.exit()
             });
     });
 
