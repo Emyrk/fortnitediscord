@@ -18,6 +18,7 @@ func NewMatchWatcher(players []string) *MatcheWatcher {
 	w := new(MatcheWatcher)
 	w.Players = players
 	w.MatchChannel = make(chan *Match, 1000)
+	w.PlayerDeets = make(map[string]*PlayerStats)
 
 	return w
 }
@@ -46,7 +47,12 @@ func (m *MatcheWatcher) Run() {
 
 		count++
 		if time.Since(last).Seconds() > 120 {
-			log.Printf("Matches Found: %d, Total Iterations: %d. Currently on %s", matchesFound, count, name)
+			cur := m.PlayerDeets[name]
+			amt := 0
+			if cur != nil {
+				amt = cur.LifetimeStats.Matches
+			}
+			log.Printf("Matches Found: %d, Total Iterations: %d. Currently on %s at %d", matchesFound, count, name, amt)
 			last = time.Now()
 		}
 	}
@@ -99,6 +105,7 @@ func (m *MatcheWatcher) DetectGame(player string) []*Match {
 		fmt.Println(err)
 		return nil
 	}
+	m.PlayerDeets[player] = curr
 
 	if prev != nil && curr.LifetimeStats.Matches > prev.LifetimeStats.Matches {
 		var resp []*Match
