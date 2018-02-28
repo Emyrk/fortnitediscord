@@ -154,6 +154,11 @@ func (m *MatcheWatcher) QuickPlayerCycle(index int) (matches []*Match) {
 		if i == index {
 			continue
 		}
+
+		games := m.DetectGame(m.Players[i])
+		if games != nil && len(games) > 0 {
+			matches = append(matches, games...)
+		}
 	}
 
 	return
