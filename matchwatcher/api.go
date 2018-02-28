@@ -39,7 +39,8 @@ func GetStatisicsWithTimeout(name string, timeout int) (*PlayerStats, error) {
 	case err := <-e1:
 		return nil, err
 	case <-time.After(time.Duration(timeout) * time.Second):
-		fmt.Errorf("Timeout on node execute")
+		return nil, fmt.Errorf("Timeout on node execute")
+
 	}
 	return nil, fmt.Errorf("impossible")
 }
