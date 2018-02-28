@@ -1,0 +1,21 @@
+ version: "2"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+    networks:
+      database:
+
+networks:
+    database:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 10.7.0.0/16
+                  gateway: 10.7.1.1
+                  ip_range: 10.7.1.0/24
+volumes:
