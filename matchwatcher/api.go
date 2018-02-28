@@ -7,11 +7,42 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"time"
 )
 
 var nodepath = filepath.Join(os.Getenv("GOPATH"), "src", "github.com", "Emyrk", "fortnitediscord", "matchwatcher", "gonode", "index.js")
 
 var _ = fmt.Println
+
+func GetStatisicsWithTimeout(name string, timeout int) (*PlayerStats, error) {
+	c1 := make(chan *PlayerStats, 1)
+	e1 := make(chan error, 1)
+	go func() {
+		res, err := GetStatisics(name)
+		if err != nil {
+			e1 <- err
+			return
+		}
+		c1 <- res
+
+	}()
+
+	// Here's the `select` implementing a timeout.
+	// `res := <-c1` awaits the result and `<-Time.After`
+	// awaits a value to be sent after the timeout of
+	// 1s. Since `select` proceeds with the first
+	// receive that's ready, we'll take the timeout case
+	// if the operation takes more than the allowed 1s.
+	select {
+	case res := <-c1:
+		return res, nil
+	case err := <-e1:
+		return nil, err
+	case <-time.After(time.Duration(timeout) * time.Second):
+		fmt.Errorf("Timeout on node execute")
+	}
+	return nil, fmt.Errorf("impossible")
+}
 
 func GetStatisics(name string) (*PlayerStats, error) {
 	data, err := GetStatisticsJson(name)

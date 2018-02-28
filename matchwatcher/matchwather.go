@@ -100,7 +100,7 @@ func (m *MatcheWatcher) DetectGame(player string) []*Match {
 	if !ok {
 		// Eh
 	}
-	curr, err := GetStatisics(player)
+	curr, err := GetStatisicsWithTimeout(player, 5)
 	if err != nil {
 		fmt.Println(err)
 		return nil
