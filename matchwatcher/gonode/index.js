@@ -21,7 +21,6 @@ fortniteAPI.login()
                 process.exit()
             })
             .catch((err) => {
-
                 console.log(args[2], err);
                 process.exit()
             });

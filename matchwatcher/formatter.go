@@ -15,7 +15,7 @@ import "fmt"
 //	return str
 //}
 
-func FormatMatch(match Match) string {
+func FormatMatch(match *Match) string {
 	player := match.Players[0]
 	win := "lost"
 	if match.Win {

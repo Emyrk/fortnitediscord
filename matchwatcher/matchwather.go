@@ -23,7 +23,7 @@ func NewMatchWatcher(players []string) *MatcheWatcher {
 
 func (m *MatcheWatcher) Run() {
 	index := 0
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(time.Second * 10)
 	for _ = range ticker.C {
 		name := m.Players[index]
 		match := m.DetectGame(name)
@@ -36,6 +36,7 @@ func (m *MatcheWatcher) Run() {
 			// TODO: Maybe sleep some more?
 		}
 		index++
+		index = index % len(m.Players)
 	}
 }
 

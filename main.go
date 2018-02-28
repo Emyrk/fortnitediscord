@@ -1,7 +1,14 @@
 package main
 
-import "github.com/Emyrk/fortnitediscord/gobot"
+import (
+	"os"
+
+	"github.com/Emyrk/fortnitediscord/gobot"
+)
 
 func main() {
-	gobot.NewBot()
+	token := os.Getenv("DISCORD_TOKEN")
+	bot := gobot.NewBot(token, []string{"Emyrks", "LopDropFlop"})
+	bot.Connect()
+	bot.Run()
 }

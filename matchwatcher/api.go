@@ -3,9 +3,13 @@ package matchwatcher
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 )
+
+var nodepath = filepath.Join(os.Getenv("GOPATH"), "src", "github.com", "Emyrk", "fortnitediscord", "matchwatcher", "gonode", "index.js")
 
 var _ = fmt.Println
 
@@ -22,7 +26,8 @@ func GetStatisics(name string) (*PlayerStats, error) {
 }
 
 func GetStatisticsJson(name string) ([]byte, error) {
-	data := exec.Command("node", "gonode/index.js", name)
+	fmt.Println(nodepath)
+	data := exec.Command("node", nodepath, name)
 	var _ = data
 
 	d, err := data.Output()
