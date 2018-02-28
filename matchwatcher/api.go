@@ -22,7 +22,7 @@ func GetStatisics(name string) (*PlayerStats, error) {
 }
 
 func GetStatisticsJson(name string) ([]byte, error) {
-	data := exec.Command("node", "gonode/index.js")
+	data := exec.Command("node", "gonode/index.js", name)
 	var _ = data
 
 	d, err := data.Output()
@@ -48,6 +48,6 @@ func GetStatisticsJson(name string) ([]byte, error) {
 	r, _ := regexp.Compile("{.*")
 	//j := r.Find([]byte(text))
 	j := r.Find(d)
-	fmt.Println(string(j))
+	// fmt.Println(string(j))
 	return j, nil
 }
