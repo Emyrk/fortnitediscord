@@ -9,13 +9,12 @@ user = process.env.EPIC_USERNAME
 pass = process.env.EPIC_PASSWORD
 
 
-console.log(args[1])
 
 let fortniteAPI = new Fortnite([user, pass, launcherkey, clientkey]);
 
 fortniteAPI.login()
     .then(() => {
-        fortniteAPI.getStatsBR(args[1], "pc")
+        fortniteAPI.getStatsBR(args[2], "pc")
         // fortniteAPI.checkPlayer("Emyrks", "pc")
             .then((stats) => {
                 console.log(JSON.stringify(stats));
@@ -23,7 +22,7 @@ fortniteAPI.login()
             })
             .catch((err) => {
 
-                console.log(args[1], err);
+                console.log(args[2], err);
                 process.exit()
             });
     });
