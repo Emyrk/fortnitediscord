@@ -25,5 +25,8 @@ fortniteAPI.login()
                 console.log(args[2], err);
                 process.exit()
             });
-    });
+    }).catch(function () {
+        console.log("Promise Rejected");
+        process.exit()
+});;;
 
