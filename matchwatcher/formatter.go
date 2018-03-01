@@ -37,7 +37,7 @@ func FormatMatch(match *Match) string {
 	str += "Game Stats \n```\n"
 	placestr := ">25"
 	if match.TopN != -1 {
-		placestr = fmt.Sprintf("Top %d", match.TopN)
+		placestr = fmt.Sprintf("Top %d", match.TopN) + "\n"
 	}
 	str += line("Place:", placestr)
 	if match.MatchTypeString() != "solo" {
