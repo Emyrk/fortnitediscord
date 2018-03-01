@@ -35,7 +35,7 @@ func FormatMatch(match *Match) string {
 	playerstr += "```\n"
 
 	str += "Game Stats \n```\n"
-	placestr := ">25"
+	placestr := ">25" + "\n"
 	if match.TopN != -1 {
 		placestr = fmt.Sprintf("Top %d", match.TopN) + "\n"
 	}
