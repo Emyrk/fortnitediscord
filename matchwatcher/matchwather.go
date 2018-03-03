@@ -27,7 +27,7 @@ var last = time.Now().Add(-130 * time.Second)
 
 func (m *MatcheWatcher) Run() {
 	index := 0
-	ticker := time.NewTicker(time.Second * 10)
+	ticker := time.NewTicker(time.Minute * 2)
 	matchesFound := 0
 	count := 0
 	for _ = range ticker.C {
