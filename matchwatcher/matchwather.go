@@ -31,6 +31,35 @@ func (m *MatcheWatcher) Run() {
 	matchesFound := 0
 	count := 0
 	for _ = range ticker.C {
+		matches := m.QuickPlayerCycle(index)
+		combinedmatches := m.CombineMatches(matches)
+		matchesFound += len(combinedmatches)
+		for _, mat := range combinedmatches {
+			m.MatchChannel <- mat
+		}
+		// TODO: Maybe sleep some more?
+		index++
+		index = index % len(m.Players)
+
+		count++
+		if time.Since(last).Seconds() > 120 {
+			cur := m.PlayerDeets[name]
+			amt := 0
+			if cur != nil {
+				amt = cur.LifetimeStats.Matches
+			}
+			log.Printf("Matches Found: %d, Total Iterations: %d. Currently on %s at %d", matchesFound, count, name, amt)
+			last = time.Now()
+		}
+	}
+}
+
+func (m *MatcheWatcher) RunOncePer() {
+	index := 0
+	ticker := time.NewTicker(time.Minute * 2)
+	matchesFound := 0
+	count := 0
+	for _ = range ticker.C {
 		name := m.Players[index]
 		match := m.DetectGame(name)
 		if match != nil {
