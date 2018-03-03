@@ -31,6 +31,7 @@ func (m *MatcheWatcher) Run() {
 	matchesFound := 0
 	count := 0
 	for _ = range ticker.C {
+		name := m.Players[index]
 		matches := m.QuickPlayerCycle(index)
 		combinedmatches := m.CombineMatches(matches)
 		matchesFound += len(combinedmatches)
